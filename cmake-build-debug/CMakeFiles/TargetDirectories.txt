@@ -1,0 +1,3 @@
+C:/Users/Szymon Wichrowski/Desktop/studia/7 semestr/pea/TSPbasics/cmake-build-debug/CMakeFiles/TSPbasics.dir
+C:/Users/Szymon Wichrowski/Desktop/studia/7 semestr/pea/TSPbasics/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Szymon Wichrowski/Desktop/studia/7 semestr/pea/TSPbasics/cmake-build-debug/CMakeFiles/rebuild_cache.dir
