@@ -15,5 +15,10 @@ class Config {
     public:
     Config();
     bool loadConfig(string file_name);
+    string getMethod();
+    string getInFile();
+    string getSolution();
+    int getRepeats();
+    string getOutFile();
 
 };

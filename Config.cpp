@@ -35,3 +35,23 @@ bool Config::loadConfig(string file_name) {
     }
 
 }
+
+string Config::getMethod() {
+    return method;
+}
+
+string Config::getInFile() {
+    return in_file;
+}
+
+string Config::getSolution() {
+    return solution;
+}
+
+int Config::getRepeats() {
+    return repeats;
+}
+
+string Config::getOutFile() {
+    return out_file;
+}
