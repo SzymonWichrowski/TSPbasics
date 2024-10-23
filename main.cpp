@@ -24,6 +24,20 @@ int main() {
         if (!data.loadData(in_file)) {
             cout << "Error with data input file!" << endl;
         }
+        else {
+            if (method == "r") {
+
+            }
+            else if (method == "n") {
+
+            }
+            else if (method == "b") {
+
+            }
+            else {
+                cout << "Incorrect method!" << endl;
+            }
+        }
     }
 
     return 0;

@@ -6,7 +6,6 @@ Config::Config() {
 }
 
 bool Config::loadConfig(string file_name) {
-
     fstream config_file;
     config_file.open(file_name, ios::in);
     if (!config_file.good()) {

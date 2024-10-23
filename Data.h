@@ -11,6 +11,7 @@ class Data {    //class to manage data from input file
 
     public:
     Data();
+    // Loads data as an integer matrix. Also returns false when loading is not successful
     bool loadData(string input_file);
 
 };

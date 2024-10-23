@@ -7,7 +7,6 @@ Data::Data() {
 }
 
 bool Data::loadData(string input_file) {
-
     fstream file;
     file.open(input_file, ios::in);
     if (!file.good()) {
