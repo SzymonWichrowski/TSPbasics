@@ -2,11 +2,12 @@
 #include <random>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include "Time.h"
 
 using namespace std;
 
-class NN {
+class Random {
 
     private:
     vector<int> solution;
@@ -17,14 +18,13 @@ class NN {
     vector<double> relative_errors;
     double time_mean;
     double absolute_error_mean, relative_error_mean;
-    void doNN(int number_vertices, vector<vector<int>> edges);
-    int calcCost(int number_vertices, vector<vector<int>> edges);
-    //bool allVisited(vector<bool> visited);
-
+    void doRandom(int number_vertices, vector<vector<int>> edges, int number_draws);
+    int calcCost(vector<int> permutation, int number_vertices, vector<vector<int>> edges);
 
     public:
-    NN();
-    void testNN(int number_vertices, vector<vector<int>> edges, int repeats, int optCost);
+    Random();
+    void testRandom(int number_vertices, vector<vector<int>> edges, int repeats, int optCost, int number_draws);
     bool saveResults(string out_file, string in_file, int optCost);
+
 
 };

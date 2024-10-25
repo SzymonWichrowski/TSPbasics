@@ -10,7 +10,8 @@ class Config {      // class to manage data from configuration file
     int optCost;
     int repeats;
     string out_file;
-    int number_info = 5;    // number of parameters in config file
+    int random_repeats;
+    int number_info = 6;    // number of parameters in config file
 
     public:
     Config();
@@ -21,5 +22,6 @@ class Config {      // class to manage data from configuration file
     int getOptCost();
     int getRepeats();
     string getOutFile();
+    int getRandomRepeats();
 
 };

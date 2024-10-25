@@ -1,55 +1,49 @@
-#include "NN.h"
+#include "Random.h"
 
-NN::NN() {}
+Random::Random() {}
 
-void NN::doNN(int number_vertices, vector<vector<int>> edges) {
+void Random::doRandom(int number_vertices, vector<vector<int>> edges, int number_draws) {
     solution.clear();
     solution.reserve(number_vertices);
-    vector<bool> visited(number_vertices, false);
+    int cost;
+    int minCost = INT_MAX;
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<int> dist_vertex(0, number_vertices - 1);
-    int start_vertex = dist_vertex(gen);
-    visited[start_vertex] = true;
-    solution.push_back(start_vertex);
-    int current_vertex = start_vertex;
-    int nearest_vertex;
-    for (int j = 0; j < number_vertices - 1; j++) {
-        int minCost = INT_MAX;
-        for (int i = 0; i < number_vertices; i++) {
-            if (!visited[i]) {
-                if (edges[current_vertex][i] < minCost) {
-                    minCost = edges[current_vertex][i];
-                    nearest_vertex = i;
-                }
-            }
-        }
-        solution.push_back(nearest_vertex);
-        visited[nearest_vertex] = true;
-        current_vertex = nearest_vertex;
+    vector<int> permutation;
+    permutation.reserve(number_vertices);
+    for (int i = 0; i < number_vertices; i++) {
+        permutation.push_back(i);
     }
+    for (int i = 0; i < number_draws; i++) {
+        shuffle(permutation.begin(), permutation.end(), gen);
+        cost = calcCost(permutation, number_vertices, edges);
+        if (cost < minCost) {
+            minCost = cost;
+            solution = permutation;
+        }
+    }
+    cost_records.push_back(minCost);
 }
 
-int NN::calcCost(int number_vertices, vector<vector<int>> edges) {
+int Random::calcCost(vector<int> permutation, int number_vertices, vector<vector<int>> edges) {
     int cost = 0;
     for (int i = 0; i < number_vertices - 1; i++) {
-        cost += edges[solution[i]][solution[i+1]];
+        cost += edges[permutation[i]][permutation[i+1]];
     }
-    cost += edges[solution[number_vertices - 1]][solution[0]];
+    cost += edges[permutation[number_vertices - 1]][permutation[0]];
     return cost;
 }
 
-void NN::testNN(int number_vertices, vector<vector<int>> edges, int repeats, int optCost) {
+void Random::testRandom(int number_vertices, vector<vector<int>> edges, int repeats, int optCost, int number_draws) {
     double time_total = 0;
     time_records.reserve(repeats);
     cost_records.reserve(repeats);
     for (int i = 0; i < repeats; i++) {
         time_utilities.timeStart();
-        doNN(number_vertices, edges);
+        doRandom(number_vertices, edges, number_draws);
         time_utilities.timeStop();
         time_records.push_back(1000000.0 * time_utilities.getElapsed() / time_utilities.getFrequency()); //[us]
         time_total += time_records[i];
-        cost_records.push_back(calcCost(number_vertices, edges));
         //printing results
         cout << i + 1 << "iteration" << endl;
         cout << "Received cost: " << cost_records[i] << endl;
@@ -66,7 +60,7 @@ void NN::testNN(int number_vertices, vector<vector<int>> edges, int repeats, int
     cout << "Average time: " << time_mean << " [us]" << endl;
 }
 
-bool NN::saveResults(string out_file, string in_file, int optCost) {
+bool Random::saveResults(std::string out_file, std::string in_file, int optCost) {
     ofstream fileCSV(out_file, ios::app);
     if (!fileCSV.good()) {
         return false;
@@ -77,7 +71,7 @@ bool NN::saveResults(string out_file, string in_file, int optCost) {
         }
         else {
             fileCSV << "\n";
-            fileCSV << "Nearest Neighbour\n";
+            fileCSV << "Random\n";
             fileCSV << in_file << "\n";
             fileCSV << optCost << "\n";
             fileCSV << "Time records [us]\n";
@@ -95,14 +89,3 @@ bool NN::saveResults(string out_file, string in_file, int optCost) {
         }
     }
 }
-
-//bool NN::allVisited(vector<bool> visited) {
-//    bool result = true;
-//    for (bool node : visited) {
-//        if (!node) {
-//            result = false;
-//            break;
-//        }
-//    }
-//    return result;
-//}
