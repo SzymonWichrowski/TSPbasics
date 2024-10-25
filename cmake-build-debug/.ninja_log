@@ -17,3 +17,13 @@
 3	918	7515652315135299	CMakeFiles/TSPbasics.dir/main.cpp.obj	4ea8653a4d35c163
 7	1003	7515652315975771	CMakeFiles/TSPbasics.dir/Random.cpp.obj	ed2dd1ca87edfeb3
 1003	1360	7515652319489862	TSPbasics.exe	91f9f03ba8968db0
+3	982	7515675204412741	CMakeFiles/TSPbasics.dir/main.cpp.obj	4ea8653a4d35c163
+9	989	7515675204489459	CMakeFiles/TSPbasics.dir/NN.cpp.obj	bb5ddab0f4680176
+6	1085	7515675205457057	CMakeFiles/TSPbasics.dir/Random.cpp.obj	ed2dd1ca87edfeb3
+1085	1433	7515675208845064	TSPbasics.exe	91f9f03ba8968db0
+6	889	7515676419762518	CMakeFiles/TSPbasics.dir/NN.cpp.obj	bb5ddab0f4680176
+3	987	7515676420736398	CMakeFiles/TSPbasics.dir/Random.cpp.obj	ed2dd1ca87edfeb3
+987	1347	7515676424267641	TSPbasics.exe	91f9f03ba8968db0
+3	880	7515680526908024	CMakeFiles/TSPbasics.dir/NN.cpp.obj	bb5ddab0f4680176
+7	968	7515680527799566	CMakeFiles/TSPbasics.dir/Random.cpp.obj	ed2dd1ca87edfeb3
+969	1322	7515680531258330	TSPbasics.exe	91f9f03ba8968db0

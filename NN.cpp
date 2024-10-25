@@ -40,9 +40,12 @@ int NN::calcCost(int number_vertices, vector<vector<int>> edges) {
 }
 
 void NN::testNN(int number_vertices, vector<vector<int>> edges, int repeats, int optCost) {
-    double time_total = 0;
+    double time_total = 0, relative_error_total = 0;
+    int absolute_error_total = 0;
     time_records.reserve(repeats);
     cost_records.reserve(repeats);
+    absolute_errors.reserve(repeats);
+    relative_errors.reserve(repeats);
     for (int i = 0; i < repeats; i++) {
         time_utilities.timeStart();
         doNN(number_vertices, edges);
@@ -50,6 +53,10 @@ void NN::testNN(int number_vertices, vector<vector<int>> edges, int repeats, int
         time_records.push_back(1000000.0 * time_utilities.getElapsed() / time_utilities.getFrequency()); //[us]
         time_total += time_records[i];
         cost_records.push_back(calcCost(number_vertices, edges));
+        absolute_errors.push_back(cost_records[i] - optCost);
+        relative_errors.push_back((double)absolute_errors[i] / optCost);
+        absolute_error_total += absolute_errors[i];
+        relative_error_total += relative_errors[i];
         //printing results
         cout << i + 1 << "iteration" << endl;
         cout << "Received cost: " << cost_records[i] << endl;
@@ -60,10 +67,18 @@ void NN::testNN(int number_vertices, vector<vector<int>> edges, int repeats, int
             }
             cout << solution[0] << endl;
         }
+        cout << "Absolute error: " << absolute_errors[i] << endl;
+        cout << "Relative error: " << relative_errors[i] << endl;
+        cout << "Relative error [%]: " << relative_errors[i] * 100 << endl;
         cout << "Time: " << time_records[i] << " [us]" << endl;
     }
     time_mean = time_total / repeats;
     cout << "Average time: " << time_mean << " [us]" << endl;
+    absolute_error_mean = (double)absolute_error_total / repeats;
+    cout << "Mean absolute error: " << absolute_error_mean << endl;
+    relative_error_mean = relative_error_total / repeats;
+    cout << "Mean relative error: " << relative_error_mean << endl;
+    cout << "Mean relative error [%]: " << relative_error_mean * 100 << endl;
 }
 
 bool NN::saveResults(string out_file, string in_file, int optCost) {
@@ -90,6 +105,24 @@ bool NN::saveResults(string out_file, string in_file, int optCost) {
             for (double cost : cost_records) {
                 fileCSV << cost << "\n";
             }
+            fileCSV << "Absolute error records\n";
+            for (double error : absolute_errors) {
+                fileCSV << error << "\n";
+            }
+            fileCSV << "Average absolute record\n";
+            fileCSV << absolute_error_mean << "\n";
+            fileCSV << "Relative error records\n";
+            for (double error : relative_errors) {
+                fileCSV << error << "\n";
+            }
+            fileCSV << "Average relative error records\n";
+            fileCSV << relative_error_mean << "\n";
+            fileCSV << "Relative error records [%]\n";
+            for (double error : relative_errors) {
+                fileCSV << error * 100 << "\n";
+            }
+            fileCSV << "Average relative error records [%]\n";
+            fileCSV << relative_error_mean * 100 << "\n";
             fileCSV.close();
             return true;
         }
