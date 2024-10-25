@@ -1,5 +1,5 @@
-b
-tsp_13.txt
-269
-1
-result.xsl
+n
+tsp_6_1.txt
+132
+10
+result.xls

@@ -1,6 +1,4 @@
 #include "BruteForce.h"
-#include <algorithm>
-#include <iostream>
 
 BruteForce::BruteForce() {
     this -> minCost = INT_MAX;
@@ -50,11 +48,37 @@ void BruteForce::testBF(int number_vertices, vector<vector<int>> edges, int repe
             }
             cout << solution[0] << endl;
         }
-        cout << "Time: " << time_records[i] << endl;
+        cout << "Time: " << time_records[i] << " [us]" << endl;
     }
     mean = time_total / repeats;
-    cout << "Average time: " << mean << endl;
+    cout << "Average time: " << mean << " [us]" << endl;
 
+}
+
+bool BruteForce::saveResults(string out_file, string in_file, int optCost) {
+    ofstream fileCSV(out_file, ios::app);
+    if (!fileCSV.good()) {
+        return false;
+    }
+    else {
+        if (!fileCSV.is_open()) {
+            return false;
+        }
+        else {
+            fileCSV << "\n";
+            fileCSV << "Brute-Force\n";
+            fileCSV << in_file << "\n";
+            fileCSV << optCost << "\n";
+            fileCSV << "Time records [us]\n";
+            for (double record : time_records) {
+                fileCSV << record << "\n";
+            }
+            fileCSV << "Average\n";
+            fileCSV << mean << "\n";
+            fileCSV.close();
+            return true;
+        }
+    }
 }
 
 

@@ -1,3 +1,6 @@
+#pragma once
+#include <profileapi.h>
+
 class Time {
 
     private:

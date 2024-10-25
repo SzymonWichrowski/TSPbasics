@@ -1,5 +1,4 @@
 #include "Time.h"
-#include <profileapi.h>
 
 Time::Time() {
     QueryPerformanceFrequency((LARGE_INTEGER *) &frequency);

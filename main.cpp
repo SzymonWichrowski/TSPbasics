@@ -2,6 +2,7 @@
 #include "Config.h"
 #include "Data.h"
 #include "BruteForce.h"
+#include "NN.h"
 
 using namespace std;
 
@@ -36,6 +37,11 @@ int main() {
                 cout << "Method: NEAREST NEIGHBOUR" << endl;
                 cout << "Instance: " + in_file << endl;
                 cout << "Optimal cost: " << optCost << endl;
+                NN nn;
+                nn.testNN(data.getNumberVertices(), data.getEdges(), repeats);
+                if (!nn.saveResults(out_file, in_file, optCost)){
+                    cout << "Data not saved!";
+                }
             }
             else if (method == "b") {
                 cout << "Method: BRUTE-FORCE" << endl;
@@ -43,6 +49,9 @@ int main() {
                 cout << "Optimal cost: " << optCost << endl;
                 BruteForce bf;
                 bf.testBF(data.getNumberVertices(), data.getEdges(), repeats);
+                if (!bf.saveResults(out_file, in_file, optCost)){
+                    cout << "Data not saved!";
+                }
             }
             else {
                 cout << "Incorrect method!" << endl;
