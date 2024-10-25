@@ -54,3 +54,11 @@ bool Data::loadData(string input_file) {
         }
     }
 }
+
+int Data::getNumberVertices() {
+    return number_vertices;
+}
+
+vector<vector<int>> Data::getEdges() {
+    return edges;
+}

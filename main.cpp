@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Config.h"
 #include "Data.h"
+#include "BruteForce.h"
 
 using namespace std;
 
@@ -13,11 +14,11 @@ int main() {
         cout << "Error with config file!" << endl;
     }
     else {
-        string method, in_file, solution, out_file;
-        int repeats;
+        string method, in_file, out_file;
+        int optCost, repeats;
         method = config.getMethod();
         in_file = config.getInFile();
-        solution = config.getSolution();
+        optCost = config.getOptCost();
         repeats = config.getRepeats();
         out_file = config.getOutFile();
 
@@ -26,13 +27,22 @@ int main() {
         }
         else {
             if (method == "r") {
+                cout << "Method: RANDOM" << endl;
+                cout << "Instance: " + in_file << endl;
+                cout << "Optimal cost: " << optCost << endl;
 
             }
             else if (method == "n") {
-
+                cout << "Method: NEAREST NEIGHBOUR" << endl;
+                cout << "Instance: " + in_file << endl;
+                cout << "Optimal cost: " << optCost << endl;
             }
             else if (method == "b") {
-
+                cout << "Method: BRUTE-FORCE" << endl;
+                cout << "Instance: " + in_file << endl;
+                cout << "Optimal cost: " << optCost << endl;
+                BruteForce bf;
+                bf.testBF(data.getNumberVertices(), data.getEdges(), repeats);
             }
             else {
                 cout << "Incorrect method!" << endl;

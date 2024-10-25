@@ -7,7 +7,7 @@ class Config {      // class to manage data from configuration file
     private:
     string method;
     string in_file;
-    string solution;
+    int optCost;
     int repeats;
     string out_file;
     int number_info = 5;    // number of parameters in config file
@@ -18,7 +18,7 @@ class Config {      // class to manage data from configuration file
     bool loadConfig(string file_name);
     string getMethod();
     string getInFile();
-    string getSolution();
+    int getOptCost();
     int getRepeats();
     string getOutFile();
 

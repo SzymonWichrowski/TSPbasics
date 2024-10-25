@@ -13,5 +13,8 @@ class Data {    //class to manage data from input file
     Data();
     // Loads data as an integer matrix. Also returns false when loading is not successful
     bool loadData(string input_file);
+    int getNumberVertices();
+    vector<vector<int>> getEdges();
+
 
 };

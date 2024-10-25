@@ -26,7 +26,7 @@ bool Config::loadConfig(string file_name) {
             }
             method = config_data[0];
             in_file = config_data[1];
-            solution = config_data[2];
+            optCost = stoi(config_data[2]);
             repeats = stoi(config_data[3]);
             out_file = config_data[4];
             return true;
@@ -43,8 +43,8 @@ string Config::getInFile() {
     return in_file;
 }
 
-string Config::getSolution() {
-    return solution;
+int Config::getOptCost() {
+    return optCost;
 }
 
 int Config::getRepeats() {
