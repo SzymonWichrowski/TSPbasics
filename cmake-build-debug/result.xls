@@ -1,0 +1,201 @@
+
+Random
+tsp_6_1.txt
+132
+Time records [us]
+713.1
+140.5
+135.8
+138.6
+135.5
+135.8
+129
+138.8
+130.2
+136.9
+Average time
+193.42
+Cost records
+132
+166
+132
+154
+154
+154
+132
+154
+154
+156
+Absolute error records
+0
+34
+0
+22
+22
+22
+0
+22
+22
+24
+Average absolute record
+16.8
+Relative error records
+0
+0.257576
+0
+0.166667
+0.166667
+0.166667
+0
+0.166667
+0.166667
+0.181818
+Average relative error records
+0.127273
+Relative error records [%]
+0
+25.7576
+0
+16.6667
+16.6667
+16.6667
+0
+16.6667
+16.6667
+18.1818
+Average relative error records [%]
+12.7273
+
+Random
+tsp_6_1.txt
+132
+Time records [us]
+622.5
+136.9
+241.8
+139.8
+167.1
+140.7
+146.3
+138.2
+241.8
+240.5
+Average time
+221.56
+Cost records
+132
+132
+156
+132
+154
+156
+132
+154
+132
+132
+Absolute error records
+0
+0
+24
+0
+22
+24
+0
+22
+0
+0
+Average absolute record
+9.2
+Relative error records
+0
+0
+0.181818
+0
+0.166667
+0.181818
+0
+0.166667
+0
+0
+Average relative error records
+0.069697
+Relative error records [%]
+0
+0
+18.1818
+0
+16.6667
+18.1818
+0
+16.6667
+0
+0
+Average relative error records [%]
+6.9697
+
+Nearest Neighbour
+tsp_6_1.txt
+132
+Time records [us]
+791.5
+28.3
+20.9
+30.4
+25.3
+34.7
+25.2
+30.7
+35.6
+31
+Average time
+105.36
+Cost records
+132
+132
+172
+132
+132
+132
+132
+172
+132
+132
+Absolute error records
+0
+0
+40
+0
+0
+0
+0
+40
+0
+0
+Average absolute record
+8
+Relative error records
+0
+0
+0.30303
+0
+0
+0
+0
+0.30303
+0
+0
+Average relative error records
+0.0606061
+Relative error records [%]
+0
+0
+30.303
+0
+0
+0
+0
+30.303
+0
+0
+Average relative error records [%]
+6.06061

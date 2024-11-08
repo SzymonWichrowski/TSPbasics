@@ -1,6 +1,6 @@
-r
+n
 tsp_6_1.txt
 132
 10
 result.xls
-100
+1800

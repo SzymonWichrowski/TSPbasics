@@ -2,6 +2,7 @@
 #include <random>
 #include <iostream>
 #include <fstream>
+#include <chrono>
 #include "Time.h"
 
 using namespace std;
@@ -17,14 +18,14 @@ class NN {
     vector<double> relative_errors;
     double time_mean;
     double absolute_error_mean, relative_error_mean;
-    void doNN(int number_vertices, vector<vector<int>> edges);
+    bool doNN(int number_vertices, vector<vector<int>> edges, int limit);
     int calcCost(int number_vertices, vector<vector<int>> edges);
     //bool allVisited(vector<bool> visited);
 
 
     public:
     NN();
-    void testNN(int number_vertices, vector<vector<int>> edges, int repeats, int optCost);
+    bool testNN(int number_vertices, vector<vector<int>> edges, int repeats, int optCost, int time_limit);
     bool saveResults(string out_file, string in_file, int optCost);
 
 };

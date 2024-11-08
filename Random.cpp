@@ -2,26 +2,40 @@
 
 Random::Random() {}
 
-void Random::doRandom(int number_vertices, vector<vector<int>> edges, int number_draws) {
+void Random::doRandom(int number_vertices, vector<vector<int>> edges, int optCost, int limit) {
     solution.clear();
     solution.reserve(number_vertices);
+
     int cost;
     int minCost = INT_MAX;
+
     random_device rd;
     mt19937 gen(rd());
+
     vector<int> permutation;
     permutation.reserve(number_vertices);
     for (int i = 0; i < number_vertices; i++) {
         permutation.push_back(i);
     }
-    for (int i = 0; i < number_draws; i++) {
+
+    auto time_started = chrono::steady_clock::now();
+    const auto time_limit = chrono::seconds(limit);
+
+    do {
         shuffle(permutation.begin(), permutation.end(), gen);
         cost = calcCost(permutation, number_vertices, edges);
+
         if (cost < minCost) {
             minCost = cost;
             solution = permutation;
         }
-    }
+
+        auto time_current = chrono::steady_clock::now();
+        if (time_current - time_started > time_limit) {
+            break;
+        }
+    } while (cost != optCost);
+
     cost_records.push_back(minCost);
 }
 
@@ -34,23 +48,27 @@ int Random::calcCost(vector<int> permutation, int number_vertices, vector<vector
     return cost;
 }
 
-void Random::testRandom(int number_vertices, vector<vector<int>> edges, int repeats, int optCost, int number_draws) {
+void Random::testRandom(int number_vertices, vector<vector<int>> edges, int repeats, int optCost, int time_limit) {
     double time_total = 0, relative_error_total = 0;
     int absolute_error_total = 0;
+
     time_records.reserve(repeats);
     cost_records.reserve(repeats);
     absolute_errors.reserve(repeats);
     relative_errors.reserve(repeats);
+
     for (int i = 0; i < repeats; i++) {
         time_utilities.timeStart();
-        doRandom(number_vertices, edges, number_draws);
+        doRandom(number_vertices, edges, optCost, time_limit);
         time_utilities.timeStop();
+
         time_records.push_back(1000000.0 * time_utilities.getElapsed() / time_utilities.getFrequency()); //[us]
         time_total += time_records[i];
         absolute_errors.push_back(cost_records[i] - optCost);
         relative_errors.push_back((double)absolute_errors[i] / optCost);
         absolute_error_total += absolute_errors[i];
         relative_error_total += relative_errors[i];
+
         //printing results
         cout << i + 1 << "iteration" << endl;
         cout << "Received cost: " << cost_records[i] << endl;

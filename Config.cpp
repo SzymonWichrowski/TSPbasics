@@ -29,7 +29,7 @@ bool Config::loadConfig(string file_name) {
             optCost = stoi(config_data[2]);
             repeats = stoi(config_data[3]);
             out_file = config_data[4];
-            random_repeats = stoi(config_data[5]);
+            time_limit = stoi(config_data[5]);
             return true;
         }
     }
@@ -55,6 +55,6 @@ int Config::getRepeats() {
 string Config::getOutFile() {
     return out_file;
 }
-int Config::getRandomRepeats() {
-    return random_repeats;
+int Config::getTimeLimit() {
+    return time_limit;
 }

@@ -17,13 +17,13 @@ int main() {
     }
     else {
         string method, in_file, out_file;
-        int optCost, repeats, random_repeats;
+        int optCost, repeats, time_limit;
         method = config.getMethod();
         in_file = config.getInFile();
         optCost = config.getOptCost();
         repeats = config.getRepeats();
         out_file = config.getOutFile();
-        random_repeats = config.getRandomRepeats();
+        time_limit = config.getTimeLimit();
 
         if (!data.loadData(in_file)) {
             cout << "Error with data input file!" << endl;
@@ -34,7 +34,7 @@ int main() {
                 cout << "Instance: " + in_file << endl;
                 cout << "Optimal cost: " << optCost << endl;
                 Random random;
-                random.testRandom(data.getNumberVertices(), data.getEdges(), repeats, optCost, random_repeats);
+                random.testRandom(data.getNumberVertices(), data.getEdges(), repeats, optCost, time_limit);
                 if (!random.saveResults(out_file, in_file, optCost)){
                     cout << "Data not saved!";
                 }
@@ -44,9 +44,10 @@ int main() {
                 cout << "Instance: " + in_file << endl;
                 cout << "Optimal cost: " << optCost << endl;
                 NN nn;
-                nn.testNN(data.getNumberVertices(), data.getEdges(), repeats, optCost);
-                if (!nn.saveResults(out_file, in_file, optCost)){
-                    cout << "Data not saved!";
+                if (nn.testNN(data.getNumberVertices(), data.getEdges(), repeats, optCost, time_limit)) {
+                    if (!nn.saveResults(out_file, in_file, optCost)){
+                        cout << "Data not saved!";
+                    }
                 }
             }
             else if (method == "b") {
@@ -64,6 +65,8 @@ int main() {
             }
         }
     }
+    cout << endl;
+    cout << "Done, press enter to exit" << endl;
     getchar();
     return 0;
 }
