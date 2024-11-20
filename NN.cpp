@@ -5,50 +5,65 @@ NN::NN() {}
 bool NN::doNN(int number_vertices, vector<vector<int>> edges, int limit) {
     solution.clear();
     solution.reserve(number_vertices);
-    vector<bool> visited(number_vertices, false);
-
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<int> dist_vertex(0, number_vertices - 1);
-
-    int start_vertex = dist_vertex(gen);
-    visited[start_vertex] = true;
-    solution.push_back(start_vertex);
-
-    int current_vertex = start_vertex;
-    int nearest_vertex;
+    int solution_cost = INT_MAX;
+    vector<int> temp_solution;
+    temp_solution.reserve(number_vertices);
 
     auto time_started = chrono::steady_clock::now();
     const auto time_limit = chrono::seconds(limit);
 
-    for (int j = 0; j < number_vertices - 1; j++) {
-        int minCost = INT_MAX;
-        for (int i = 0; i < number_vertices; i++) {
-            if (!visited[i]) {
-                if (edges[current_vertex][i] < minCost) {
-                    minCost = edges[current_vertex][i];
-                    nearest_vertex = i;
+    for (int vertex = 0; vertex < number_vertices; vertex++) {
+
+        temp_solution.clear();
+        vector<bool> visited(number_vertices, false);
+
+        int start_vertex = vertex;
+        visited[start_vertex] = true;
+        temp_solution.push_back(start_vertex);
+
+        int current_vertex = start_vertex;
+        int nearest_vertex;
+
+        for (int j = 0; j < number_vertices - 1; j++) {
+            int minCost = INT_MAX;
+            for (int i = 0; i < number_vertices; i++) {
+                if (!visited[i]) {
+                    if (edges[current_vertex][i] <= minCost) {
+                        // tutaj jeszcze jeden if
+                        // jesli jest rowna to jeszcze jakos sprawdzic ta druga mozliwosc
+                        // KURCZAKI GDZIE JA MAM TO ZMIESCIC TUTAJ NIBY XDD we'll see
+                        minCost = edges[current_vertex][i];
+                        nearest_vertex = i;
+                    }
                 }
             }
-        }
-        solution.push_back(nearest_vertex);
-        visited[nearest_vertex] = true;
-        current_vertex = nearest_vertex;
+            temp_solution.push_back(nearest_vertex);
+            visited[nearest_vertex] = true;
+            current_vertex = nearest_vertex;
 
-        auto time_current = chrono::steady_clock::now();
-        if (time_current - time_started > time_limit) {
-            return false;
+            auto time_current = chrono::steady_clock::now();
+            if (time_current - time_started > time_limit) {
+                return false;
+            }
         }
+
+        int temp_solution_cost = calcCost(number_vertices, edges, temp_solution);
+        if (temp_solution_cost < solution_cost) {
+            solution_cost = temp_solution_cost;
+            solution = temp_solution;
+        }
+
     }
+
     return true;
 }
 
-int NN::calcCost(int number_vertices, vector<vector<int>> edges) {
+int NN::calcCost(int number_vertices, vector<vector<int>> edges, vector<int> path) {
     int cost = 0;
     for (int i = 0; i < number_vertices - 1; i++) {
-        cost += edges[solution[i]][solution[i+1]];
+        cost += edges[path[i]][path[i+1]];
     }
-    cost += edges[solution[number_vertices - 1]][solution[0]];
+    cost += edges[path[number_vertices - 1]][path[0]];
     return cost;
 }
 
@@ -75,7 +90,7 @@ bool NN::testNN(int number_vertices, vector<vector<int>> edges, int repeats, int
 
         time_records.push_back(1000000.0 * time_utilities.getElapsed() / time_utilities.getFrequency()); //[us]
         time_total += time_records[i];
-        cost_records.push_back(calcCost(number_vertices, edges));
+        cost_records.push_back(calcCost(number_vertices, edges, solution));
         absolute_errors.push_back(cost_records[i] - optCost);
         relative_errors.push_back((double)absolute_errors[i] / optCost);
         absolute_error_total += absolute_errors[i];

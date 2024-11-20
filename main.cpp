@@ -55,9 +55,10 @@ int main() {
                 cout << "Instance: " + in_file << endl;
                 cout << "Optimal cost: " << optCost << endl;
                 BruteForce bf;
-                bf.testBF(data.getNumberVertices(), data.getEdges(), repeats);
-                if (!bf.saveResults(out_file, in_file, optCost)){
-                    cout << "Data not saved!";
+                if (bf.testBF(data.getNumberVertices(), data.getEdges(), repeats, time_limit)) {
+                    if (!bf.saveResults(out_file, in_file, optCost)){
+                        cout << "Data not saved!";
+                    }
                 }
             }
             else {

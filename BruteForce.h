@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include <chrono>
 #include "Time.h"
 
 using namespace std;
@@ -15,7 +16,7 @@ class BruteForce {
     vector<double> time_records;
     double mean;
     // Executes the Brute-Force algorithm
-    void doBF(int number_vertices, vector<vector<int>> edges);
+    bool doBF(int number_vertices, vector<vector<int>> edges, int limit);
     // Calculates cost of given permutation
     int calcCost(vector<int> permutation, int number_vertices, vector<vector<int>> edges);
 
@@ -23,7 +24,7 @@ class BruteForce {
     public:
     BruteForce();
     // Method used in tests of the Brute-Force algorithm
-    void testBF(int number_vertices, vector<vector<int>> edges, int repeats);
+    bool testBF(int number_vertices, vector<vector<int>> edges, int repeats, int time_limit);
     bool saveResults(string out_file, string in_file, int optCost);
 
 

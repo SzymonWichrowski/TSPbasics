@@ -19,7 +19,7 @@ class NN {
     double time_mean;
     double absolute_error_mean, relative_error_mean;
     bool doNN(int number_vertices, vector<vector<int>> edges, int limit);
-    int calcCost(int number_vertices, vector<vector<int>> edges);
+    int calcCost(int number_vertices, vector<vector<int>> edges, vector<int> path);
     //bool allVisited(vector<bool> visited);
 
 
