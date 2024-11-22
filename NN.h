@@ -19,6 +19,9 @@ class NN {
     double time_mean;
     double absolute_error_mean, relative_error_mean;
     bool doNN(int number_vertices, vector<vector<int>> edges, int limit);
+    bool doRecursiveNN(int number_vertices, vector<vector<int>>& edges,
+                       chrono::seconds time_limit, chrono::steady_clock::time_point time_started,
+                       vector<bool>& visited, int current_vertex, vector<int>& temp_solution, int& solution_cost);
     int calcCost(int number_vertices, vector<vector<int>> edges, vector<int> path);
     //bool allVisited(vector<bool> visited);
 

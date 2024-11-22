@@ -17,42 +17,61 @@ bool NN::doNN(int number_vertices, vector<vector<int>> edges, int limit) {
         temp_solution.clear();
         vector<bool> visited(number_vertices, false);
 
-        int start_vertex = vertex;
-        visited[start_vertex] = true;
-        temp_solution.push_back(start_vertex);
+        visited[vertex] = true;
+        temp_solution.push_back(vertex);
 
-        int current_vertex = start_vertex;
-        int nearest_vertex;
-
-        for (int j = 0; j < number_vertices - 1; j++) {
-            int minCost = INT_MAX;
-            for (int i = 0; i < number_vertices; i++) {
-                if (!visited[i]) {
-                    if (edges[current_vertex][i] <= minCost) {
-                        // tutaj jeszcze jeden if
-                        // jesli jest rowna to jeszcze jakos sprawdzic ta druga mozliwosc
-                        // KURCZAKI GDZIE JA MAM TO ZMIESCIC TUTAJ NIBY XDD we'll see
-                        minCost = edges[current_vertex][i];
-                        nearest_vertex = i;
-                    }
-                }
-            }
-            temp_solution.push_back(nearest_vertex);
-            visited[nearest_vertex] = true;
-            current_vertex = nearest_vertex;
-
-            auto time_current = chrono::steady_clock::now();
-            if (time_current - time_started > time_limit) {
-                return false;
-            }
+        if (!doRecursiveNN(number_vertices, edges, time_limit, time_started, visited, vertex, temp_solution, solution_cost)) {
+            return false;
         }
+    }
 
+    return true;
+}
+
+bool NN::doRecursiveNN(int number_vertices, vector<vector<int>>& edges,
+                       chrono::seconds time_limit, chrono::steady_clock::time_point time_started,
+                       vector<bool>& visited, int current_vertex, vector<int>& temp_solution, int& solution_cost) {
+
+    if (temp_solution.size() == number_vertices) {
         int temp_solution_cost = calcCost(number_vertices, edges, temp_solution);
         if (temp_solution_cost < solution_cost) {
             solution_cost = temp_solution_cost;
             solution = temp_solution;
         }
+        return true;
+    }
 
+    int minCost = INT_MAX;
+    vector<int> possibilities;
+
+    for (int i = 0; i < number_vertices; i++) {
+        if (!visited[i]) {
+            if (edges[current_vertex][i] < minCost) {
+                minCost = edges[current_vertex][i];
+                possibilities.clear();
+                possibilities.push_back(i);
+            }
+            else if (edges[current_vertex][i] == minCost) {
+                possibilities.push_back(i);
+            }
+        }
+    }
+
+    for (int possibility : possibilities) {
+        temp_solution.push_back(possibility);
+        visited[possibility] = true;
+
+        auto time_current = chrono::steady_clock::now();
+        if (time_current - time_started > time_limit) {
+            return false;
+        }
+
+        if (!doRecursiveNN(number_vertices, edges, time_limit, time_started, visited, possibility, temp_solution, solution_cost)) {
+            return false;
+        }
+
+        temp_solution.pop_back();
+        visited[possibility] = false;
     }
 
     return true;
